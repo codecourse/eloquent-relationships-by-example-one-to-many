@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\PostDestroyController;
+use App\Http\Controllers\PostIndexController;
+use App\Http\Controllers\PostStoreController;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -15,62 +18,66 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $user = User::find(1);
+Route::get('/posts', PostIndexController::class);
+Route::post('/posts', PostStoreController::class);
+Route::delete('/posts/{post}', PostDestroyController::class);
 
-    // dd($user->posts->count());
+// Route::get('/', function () {
+//     $user = User::find(1);
 
-    foreach($user->posts as $post) {
-        dump($post);
-    }
-});
+//     // dd($user->posts->count());
 
-Route::get('/create', function () {
-    $user = User::find(1);
+//     foreach($user->posts as $post) {
+//         dump($post);
+//     }
+// });
 
-    $user->posts()->create([
-        'body' => 'A second post'
-    ]);
-});
+// Route::get('/create', function () {
+//     $user = User::find(1);
 
-Route::get('/create/alt', function () {
-    $user = User::find(1);
+//     $user->posts()->create([
+//         'body' => 'A second post'
+//     ]);
+// });
 
-    $post = Post::make([
-        'body' => 'A third post'
-    ]);
+// Route::get('/create/alt', function () {
+//     $user = User::find(1);
 
-    $user->posts()->save($post);
-});
+//     $post = Post::make([
+//         'body' => 'A third post'
+//     ]);
 
-Route::get('/posts', function () {
-    $user = User::find(1);
+//     $user->posts()->save($post);
+// });
 
-    return view('posts.index', [
-        'posts' => $user->latestPosts,
-    ]);
-});
+// Route::get('/posts', function () {
+//     $user = User::find(1);
 
-Route::get('/delete/{post}', function (Post $post) {
-    $user = User::find(1);
+//     return view('posts.index', [
+//         'posts' => $user->latestPosts,
+//     ]);
+// });
 
-    // $post->delete();
+// Route::get('/delete/{post}', function (Post $post) {
+//     $user = User::find(1);
 
-    // $userPost = $user->posts()->where('id', $post->id)->first();
-    // $userPost->delete();
-    $user->posts()->find($post)->first()?->delete();
-});
+//     // $post->delete();
 
-Route::get('/update/{post}', function (Post $post) {
-    $user = User::find(1);
+//     // $userPost = $user->posts()->where('id', $post->id)->first();
+//     // $userPost->delete();
+//     $user->posts()->find($post)->first()?->delete();
+// });
 
-    // authorize
+// Route::get('/update/{post}', function (Post $post) {
+//     $user = User::find(1);
 
-    $user->posts()->find($post)->first()->update([
-        'body' => 'Another new body'
-    ]);
+//     // authorize
 
-    // $post->update([
-    //     'body' => 'A new body'
-    // ]);
-});
+//     $user->posts()->find($post)->first()->update([
+//         'body' => 'Another new body'
+//     ]);
+
+//     // $post->update([
+//     //     'body' => 'A new body'
+//     // ]);
+// });
