@@ -46,10 +46,8 @@ Route::get('/create/alt', function () {
 Route::get('/posts', function () {
     $user = User::find(1);
 
-    $posts = $user->posts()->latest()->get();
-
     return view('posts.index', [
-        'posts' => $posts,
+        'posts' => $user->latestPosts,
     ]);
 });
 
