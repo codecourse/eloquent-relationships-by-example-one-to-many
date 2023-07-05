@@ -62,3 +62,17 @@ Route::get('/delete/{post}', function (Post $post) {
     // $userPost->delete();
     $user->posts()->find($post)->first()?->delete();
 });
+
+Route::get('/update/{post}', function (Post $post) {
+    $user = User::find(1);
+
+    // authorize
+
+    $user->posts()->find($post)->first()->update([
+        'body' => 'Another new body'
+    ]);
+
+    // $post->update([
+    //     'body' => 'A new body'
+    // ]);
+});
