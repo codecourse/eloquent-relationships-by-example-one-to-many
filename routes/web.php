@@ -52,3 +52,13 @@ Route::get('/posts', function () {
         'posts' => $posts,
     ]);
 });
+
+Route::get('/delete/{post}', function (Post $post) {
+    $user = User::find(1);
+
+    // $post->delete();
+
+    // $userPost = $user->posts()->where('id', $post->id)->first();
+    // $userPost->delete();
+    $user->posts()->find($post)->first()?->delete();
+});
