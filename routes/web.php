@@ -18,7 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $user = User::find(1);
 
-    dd($user->posts);
+    // dd($user->posts->count());
+
+    foreach($user->posts as $post) {
+        dump($post);
+    }
 });
 
 Route::get('/create', function () {
@@ -37,4 +41,14 @@ Route::get('/create/alt', function () {
     ]);
 
     $user->posts()->save($post);
+});
+
+Route::get('/posts', function () {
+    $user = User::find(1);
+
+    $posts = $user->posts()->latest()->get();
+
+    return view('posts.index', [
+        'posts' => $posts,
+    ]);
 });
